@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mijn Schaakbord</title>
+  <link rel="stylesheet" href="https://unpkg.com/chessboardjs@1.0.0/www/css/chessboard.css" />
+  <style>
+    #board {
+      width: 400px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+
+<div id="board"></div>
+
+<script src="https://unpkg.com/chess.js@1.0.0/chess.js"></script>
+<script src="https://unpkg.com/chessboardjs@1.0.0/www/js/chessboard.js"></script>
+<script>
+  const game = new Chess();
+
+  const board = Chessboard('board', {
+    draggable: true,
+    position: 'start',
+    onDrop: function(source, target, piece, newPos, oldPos, orientation) {
+      // Probeer de zet te maken in de game logica
+      const move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q' // automatisch promoveren naar dame
+      });
+
+      // Ongeldige zet
+      if (move === null) {
+        return 'snapback';
